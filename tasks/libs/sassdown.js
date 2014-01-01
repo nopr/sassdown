@@ -17,11 +17,22 @@ var Handlebars = require('handlebars');
 
 // Quick utility functions
 // =======================
-function warning   (message) { return grunt.verbose.warn(message); }
-function uncomment (comment) { return comment.replace(/\/\* | \*\/|\/\*|\*\//g, ''); }
-function unindent  (comment) { return comment.replace(/\n \* |\n \*|\n /g, '\n').replace(/\n   /g, '\n    '); }
-function fromroot  (resolve) { return path.relative(path.dirname(), resolve); }
-function fromdata  (resolve) { return fromroot(path.resolve(module.filename, '..', '..', 'data', resolve)); }
+function warning    (message) { return grunt.verbose.warn(message); }
+function uncomment  (comment) { return comment.replace(/\/\* | \*\/|\/\*|\*\//g, ''); }
+function unindent   (comment) { return comment.replace(/\n \* |\n \*|\n /g, '\n').replace(/\n   /g, '\n    '); }
+function fromroot   (resolve) { return path.relative(path.dirname(), resolve); }
+function fromdata   (resolve) { return fromroot(path.resolve(module.filename, '..', '..', 'data', resolve)); }
+function frombase   (resolve) { return path.relative(process.cwd(), resolve); }
+function findreadme (resolve) {
+    // Attempt to find a README with common extensions in the passed directory, case insensitive
+    var readmeGlob = 'readme+(|.md|.markdown)';
+    var files = grunt.file.expand({ cwd: resolve, nocase: true }, readmeGlob);
+
+    // Return relative path to first README found or recurse up a directory until hitting Grunt's base path
+    // TODO: Something brilliant when more than one exists.
+    if (files.length) { return frombase(path.resolve(resolve, files[0])); }
+    else if (resolve !== process.cwd()) { return findreadme(path.resolve(resolve, '..')); }
+}
 
 // Exported methods
 // ===========================
@@ -208,15 +219,17 @@ exports.sections = function (file) {
 };
 
 exports.readme = function (config) {
-    // Resolve the relative path to readme
-    var readme = fromroot(path.resolve(config.root, 'readme.md'));
-    // Readme.md not found, create it:
-    if (!grunt.file.exists(readme)) {
+    // Try to find relative path to a README starting in the Grunt cwd and traversing up to the Grunt base path
+    var readme = findreadme(config.cwd);
+
+    // README not found, create it:
+    if (!readme) {
+        readme = fromroot(path.resolve(config.root, 'README.md'));
         warning('Readme file not found. Create it.');
         grunt.file.write(readme, 'Styleguide\n==========\n\nFill me with your delicious readme content\n');
-        grunt.verbose.or.ok('Readme file created: '+config.root+'/readme.md');
+        grunt.verbose.or.ok('README file created: ', readme);
     }
-    // Now that a Readme.md exists
+    // Now that a README exists
     if (grunt.file.exists(readme)) {
         // Create a file object
         var file = {};
