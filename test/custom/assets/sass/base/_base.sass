@@ -1,0 +1,124 @@
+/* ==========================================================================
+   Base Styles
+
+   A stylesheet with _mixed_ comments
+   ========================================================================== */
+
+*,
+*:before,
+*:after
+  -webkit-box-sizing: border-box
+  -moz-box-sizing: border-box
+  box-sizing: border-box
+
+html,
+button,
+input,
+select,
+textarea
+  color: #000
+
+
+body
+  background: #fff
+  color: #000
+  font-size: 12px
+  line-height: 1em
+  font-family: Arial
+
+
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection declarations have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection
+  color: #f00
+  text-shadow: none
+
+
+::selection
+  color: #f00
+  text-shadow: none
+
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr
+  display: block
+  height: 1px
+  border: 0
+  border-top: 1px solid #ccc
+  margin: 1em 0
+  padding: 0
+
+
+/*
+ * Remove the gap between images and the bottom of their containers: h5bp.com/i/440
+ */
+
+img
+  vertical-align: middle
+
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset
+  border: 0
+  margin: 0
+  padding: 0
+
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea
+  resize: vertical
+
+
+
+
+/* Shared Styles
+   ========================================================================== */
+
+
+.img-responsive
+  display: block
+  height: auto
+  max-width: 100%
+
+/* ==========================================================================
+   Default Typography
+   ========================================================================== */
+
+/* Headings and Base
+   ========================================================================== */
+
+h1,
+h2,
+h3
+  font-size: 2em
+  font-weight: bold
+
+
+
+/* Typographic Helpers
+   ========================================================================== */
+
+.fsize-xs
+  font-size: 0.5em
+
+.fsize-s
+  font-size: 0.8em
+
+.fsize-l
+  font-size: 1.5em
+
+.fsize-xl
+  font-size: 2em

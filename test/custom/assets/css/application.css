@@ -1,0 +1,139 @@
+/* ==========================================================================
+ * Base Styles
+ *
+ * A stylesheet with _mixed_ comments
+ * ========================================================================== */
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+html,
+button,
+input,
+select,
+textarea {
+  color: black; }
+
+body {
+  background: white;
+  color: black;
+  font-size: 12px;
+  line-height: 1em;
+  font-family: Arial; }
+
+/* Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection declarations have to be separate.
+ * Customize the background color to match your design.
+ */
+::-moz-selection {
+  color: red;
+  text-shadow: none; }
+
+::selection {
+  color: red;
+  text-shadow: none; }
+
+/* A better looking default horizontal rule
+ */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #cccccc;
+  margin: 1em 0;
+  padding: 0; }
+
+/* Remove the gap between images and the bottom of their containers: h5bp.com/i/440
+ */
+img {
+  vertical-align: middle; }
+
+/* Remove default fieldset styles.
+ */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0; }
+
+/* Allow only vertical resizing of textareas.
+ */
+textarea {
+  resize: vertical; }
+
+/* Shared Styles
+ * ========================================================================== */
+.img-responsive {
+  display: block;
+  height: auto;
+  max-width: 100%; }
+
+/* ==========================================================================
+ * Default Typography
+ * ========================================================================== */
+/* Headings and Base
+ * ========================================================================== */
+h1,
+h2,
+h3 {
+  font-size: 2em;
+  font-weight: bold; }
+
+/* Typographic Helpers
+ * ========================================================================== */
+.fsize-xs {
+  font-size: 0.5em; }
+
+.fsize-s {
+  font-size: 0.8em; }
+
+.fsize-l {
+  font-size: 1.5em; }
+
+.fsize-xl {
+  font-size: 2em; }
+
+/* ==========================================================================
+ * Media Object
+ *
+ * ```
+ * <div class="media">
+ *  <img src="http://placehold.it/60x60" class="media-img" alt="" />
+ *  <p class="media-body">This is a sample title</p>
+ * </div>
+ * ```
+ * ========================================================================== */
+.media {
+  border: 1px solid #ccc;
+  display: inline-block;
+  width: 600px;
+  overflow: hidden;
+  padding: 10px; }
+
+.media-img {
+  float: left;
+  margin-right: 10px; }
+  .media-img > img {
+    display: block; }
+
+.media-body {
+  font-size: 12px; }
+
+/* Right Thumbnail Sub-module
+ *
+ *
+ * The thumbnail is floated to the **right**
+ *
+ * ```
+ * <div class="media media_right">
+ *  <img src="http://placehold.it/60x60" class="media-img" alt="" />
+ *  <p class="media-body">This is a sample title</p>
+ * </div>
+ * ```
+ * ========================================================================== */
+.media_right > .media-img {
+  float: right;
+  margin-left: 10px;
+  margin-right: 0; }

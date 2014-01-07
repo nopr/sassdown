@@ -10,14 +10,14 @@
     <div class="navigation">
         <div class="gutter">
             <div class="group {{#if_group ''}}is-active{{/if_group}}">
-                <a href="/{{site.root}}">Home</a>
+                <a href="{{site.rootUrl}}">Home</a>
             </div>
             {{#each site.groups}}
             <div class="group {{#if_name ../group}}is-active{{/if_name}}">
                 <span>{{name}}</span>
                 <ul>
                     {{#each pages}}
-                    <li><a class="{{#if_path ../../path}}is-active{{/if_path}}" href="/{{path}}">{{heading}}</a></li>
+                    <li><a class="{{#if_path ../../path}}is-active{{/if_path}}" href="{{url}}">{{heading}}</a></li>
                     {{/each}}
                 </ul>
             </div>
@@ -54,8 +54,12 @@
                     </div>
                 {{/if}}
                 {{#if source}}
-                    <div class="source language-markup">{{{source}}}</div>
+                    <div class="source language-markup" data-source-type="html">{{{source}}}</div>
                 {{/if}}
+                {{#if cssSource}}
+                    <div class="source language-{{prismLang}}" data-source-type="{{fileExt}}">{{{cssSource}}}</div>
+                {{/if}}
+
             </div>
         {{/each}}
     </div>

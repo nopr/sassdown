@@ -114,13 +114,35 @@ a { color: #000; text-decoration: none; }
     background: #f7f7f7;
     padding: 20px;
 }
+.section .source[class*="language-"] {
+	position: relative;
+}
+.section .source[class*="language-"]:after {
+	content: attr(data-source-type);
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 7px 7px;
+	background: #3fbead;
+	color: #fff;
+	line-height: 1;
+	text-transform: uppercase;
+	display: inline-block;
+	-webkit-border-bottom-left-radius: 6px;
+	-moz-border-bottom-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+	font-weight: bold;
+	font-size: 11px;
+}
 
 /*
 ** Typography
 ** ----------
 */
-.section .comment h1 {
+.section .comment h1,
+.section .comment p:first-child {
     font-size: 25px;
+    font-weight: bold;
     margin-bottom: 25px;
 }
 .section .comment h2 {
@@ -131,6 +153,16 @@ a { color: #000; text-decoration: none; }
 }
 .section .comment :last-child {
     margin-bottom: 0;
+}
+
+.section .comment ul,
+.section .comment ol {
+	margin-left: 3em;
+}
+
+pre[class*="language-"] {
+	overflow-y: auto;
+	max-height: 500px;
 }
 
 /*
@@ -166,6 +198,9 @@ pre[class*="language-"] {
 }
 code[class*="language"] {
   display:block;
+}
+.token.comment {
+	padding: 0;
 }
 .token.comment,
 .token.block-comment,

@@ -1,0 +1,47 @@
+/* ==========================================================================
+   Media Object
+
+   ```
+   <div class="media">
+    <img src="http://placehold.it/60x60" class="media-img" alt="" />
+    <p class="media-body">This is a sample title</p>
+   </div>
+   ```
+   ========================================================================== */
+
+.media
+  border: 1px solid #ccc
+  padding: 10px
+  display: inline-block
+  width: 600px
+  overflow: hidden
+
+.media-img
+  float: left
+  margin-right: 10px
+  > img
+    display: block
+
+.media-body
+  font-size: 12px
+
+
+
+/* Right Thumbnail Sub-module
+
+
+   The thumbnail is floated to the **right**
+
+   ```
+   <div class="media media_right">
+    <img src="http://placehold.it/60x60" class="media-img" alt="" />
+    <p class="media-body">This is a sample title</p>
+   </div>
+   ```
+   ========================================================================== */
+
+.media_right
+  > .media-img
+    float: right
+    margin-left: 10px
+    margin-right: 0

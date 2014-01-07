@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Typography &middot; Styleguide</title>
+    <style>html{background:#e2e5dc}*{margin:0;padding:0;border:0;font-size:inherit}html,body{font-size:100%}body{font:14px/25px Arial,sans-serif;padding:90px 20px 0}a{color:#000;text-decoration:none}.gutter{width:100%;max-width:900px;margin:0 auto}.navigation{box-shadow:inset 0 -1px 0 0 #2eab9a,0 0 20px 12px #e2e5dc;border-bottom:1px solid #fff;background:#3fbead;position:fixed;z-index:1000;height:50px;width:100%;left:0;top:0}.navigation span,.navigation ul,.navigation li,.navigation a{display:block}.navigation .group{float:left;position:relative}.navigation .group>a,.navigation .group>span{color:#1c655b;font:bold 11px/50px Arial,sans-serif;text-transform:uppercase;padding:0 20px;overflow:hidden}.navigation .group>span{cursor:default}.navigation ul{display:none;position:absolute;z-index:999;box-shadow:0 2px 3px rgba(0,0,0,0.2);border-radius:0 5px 5px 5px;top:45px;left:0}.navigation li a{min-width:10em;line-height:30px;padding:0 20px;font-size:13px;border-bottom:1px solid #eee;color:#3fbead}.navigation li a.is-active{color:#1c655b}.navigation li:last-child a{border:0}.navigation li a:hover{color:#1c655b}.navigation .group.is-active>span,.navigation .group.is-active>a{color:#fff}.navigation .group:hover>span,.navigation .group:hover>a,.navigation .group:hover ul{background:white;color:#1c655b;display:block}.section{background:#fff;box-shadow:0 2px 3px rgba(0,0,0,0.2);margin-bottom:20px}.section .comment{padding:20px}.section .result{padding:0 20px 20px}.section .result iframe{display:block;overflow:hidden;position:relative;width:100%}.section .source{border-top:1px solid #ddd;background:#f7f7f7;padding:20px}.section .source[class*="language-"]{position:relative}.section .source[class*="language-"]:after{content:attr(data-source-type);position:absolute;top:0;right:0;padding:7px 7px;background:#3fbead;color:#fff;line-height:1;text-transform:uppercase;display:inline-block;-webkit-border-bottom-left-radius:6px;-moz-border-bottom-left-radius:6px;border-bottom-left-radius:6px;font-weight:bold;font-size:11px}.section .comment h1,.section .comment p:first-child{font-size:25px;font-weight:bold;margin-bottom:25px}.section .comment h2{font-size:16px}.section .comment p{margin-bottom:25px}.section .comment :last-child{margin-bottom:0}.section .comment ul,.section .comment ol{margin-left:3em}pre[class*="language-"]{overflow-y:auto;max-height:500px}.section .comment code{color:#3fbead;font-family:Consolas,Monaco,'Andale Mono',monospace;font-size:13px}code[class*="language-"],pre[class*="language-"]{color:black;font-family:Consolas,Monaco,'Andale Mono',monospace;font-size:13px;line-height:20px;direction:ltr;text-align:left;white-space:pre-wrap;word-spacing:normal;margin:0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*="language-"]{position:relative}code[class*="language"]{display:block}.token.comment{padding:0}.token.comment,.token.block-comment,.token.prolog,.token.doctype,.token.cdata{color:#7d8b99}.token.punctuation{color:#5f6364}.token.property,.token.tag,.token.boolean,.token.number,.token.function-name,.token.constant,.token.symbol{color:#c92c2c}.token.selector,.token.attr-name,.token.string,.token.function,.token.builtin{color:#2f9c0a}.token.operator,.token.entity,.token.url,.token.variable{color:#a67f59;background:rgba(255,255,255,0.5)}.token.atrule,.token.attr-value,.token.keyword,.token.class-name{color:#1990b8}.token.regex,.token.important{color:#e90}.language-css .token.string,.style .token.string{color:#a67f59;background:rgba(255,255,255,0.5)}.token.important{font-weight:normal}.token.entity{cursor:help}.namespace{opacity:.7}.token.tab:not(:empty):before,.token.cr:before,.token.lf:before{color:#e0d7d1}</style>
+    <script>/**
+ * Prism: Lightweight, robust, elegant syntax highlighting
+ * MIT license http://www.opensource.org/licenses/mit-license.php/
+ * @author Lea Verou http://lea.verou.me
+ */(function(){var e=/\blang(?:uage)?-(?!\*)(\w+)\b/i,t=self.Prism={util:{type:function(e){return Object.prototype.toString.call(e).match(/\[object (\w+)\]/)[1]},clone:function(e){var n=t.util.type(e);switch(n){case"Object":var r={};for(var i in e)e.hasOwnProperty(i)&&(r[i]=t.util.clone(e[i]));return r;case"Array":return e.slice()}return e}},languages:{extend:function(e,n){var r=t.util.clone(t.languages[e]);for(var i in n)r[i]=n[i];return r},insertBefore:function(e,n,r,i){i=i||t.languages;var s=i[e],o={};for(var u in s)if(s.hasOwnProperty(u)){if(u==n)for(var a in r)r.hasOwnProperty(a)&&(o[a]=r[a]);o[u]=s[u]}return i[e]=o},DFS:function(e,n){for(var r in e){n.call(e,r,e[r]);t.util.type(e)==="Object"&&t.languages.DFS(e[r],n)}}},highlightAll:function(e,n){var r=document.querySelectorAll('code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code');for(var i=0,s;s=r[i++];)t.highlightElement(s,e===!0,n)},highlightElement:function(r,i,s){var o,u,a=r;while(a&&!e.test(a.className))a=a.parentNode;if(a){o=(a.className.match(e)||[,""])[1];u=t.languages[o]}if(!u)return;r.className=r.className.replace(e,"").replace(/\s+/g," ")+" language-"+o;a=r.parentNode;/pre/i.test(a.nodeName)&&(a.className=a.className.replace(e,"").replace(/\s+/g," ")+" language-"+o);var f=r.textContent;if(!f)return;f=f.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\u00a0/g," ");var l={element:r,language:o,grammar:u,code:f};t.hooks.run("before-highlight",l);if(i&&self.Worker){var c=new Worker(t.filename);c.onmessage=function(e){l.highlightedCode=n.stringify(JSON.parse(e.data),o);t.hooks.run("before-insert",l);l.element.innerHTML=l.highlightedCode;s&&s.call(l.element);t.hooks.run("after-highlight",l)};c.postMessage(JSON.stringify({language:l.language,code:l.code}))}else{l.highlightedCode=t.highlight(l.code,l.grammar,l.language);t.hooks.run("before-insert",l);l.element.innerHTML=l.highlightedCode;s&&s.call(r);t.hooks.run("after-highlight",l)}},highlight:function(e,r,i){return n.stringify(t.tokenize(e,r),i)},tokenize:function(e,n,r){var i=t.Token,s=[e],o=n.rest;if(o){for(var u in o)n[u]=o[u];delete n.rest}e:for(var u in n){if(!n.hasOwnProperty(u)||!n[u])continue;var a=n[u],f=a.inside,l=!!a.lookbehind,c=0;a=a.pattern||a;for(var h=0;h<s.length;h++){var p=s[h];if(s.length>e.length)break e;if(p instanceof i)continue;a.lastIndex=0;var d=a.exec(p);if(d){l&&(c=d[1].length);var v=d.index-1+c,d=d[0].slice(c),m=d.length,g=v+m,y=p.slice(0,v+1),b=p.slice(g+1),w=[h,1];y&&w.push(y);var E=new i(u,f?t.tokenize(d,f):d);w.push(E);b&&w.push(b);Array.prototype.splice.apply(s,w)}}}return s},hooks:{all:{},add:function(e,n){var r=t.hooks.all;r[e]=r[e]||[];r[e].push(n)},run:function(e,n){var r=t.hooks.all[e];if(!r||!r.length)return;for(var i=0,s;s=r[i++];)s(n)}}},n=t.Token=function(e,t){this.type=e;this.content=t};n.stringify=function(e,r,i){if(typeof e=="string")return e;if(Object.prototype.toString.call(e)=="[object Array]")return e.map(function(t){return n.stringify(t,r,e)}).join("");var s={type:e.type,content:n.stringify(e.content,r,i),tag:"span",classes:["token",e.type],attributes:{},language:r,parent:i};s.type=="comment"&&(s.attributes.spellcheck="true");t.hooks.run("wrap",s);var o="";for(var u in s.attributes)o+=u+'="'+(s.attributes[u]||"")+'"';return"<"+s.tag+' class="'+s.classes.join(" ")+'" '+o+">"+s.content+"</"+s.tag+">"};if(!self.document){self.addEventListener("message",function(e){var n=JSON.parse(e.data),r=n.language,i=n.code;self.postMessage(JSON.stringify(t.tokenize(i,t.languages[r])));self.close()},!1);return}var r=document.getElementsByTagName("script");r=r[r.length-1];if(r){t.filename=r.src;document.addEventListener&&!r.hasAttribute("data-manual")&&document.addEventListener("DOMContentLoaded",t.highlightAll)}})();;
+Prism.languages.markup={comment:/&lt;!--[\w\W]*?-->/g,prolog:/&lt;\?.+?\?>/,doctype:/&lt;!DOCTYPE.+?>/,cdata:/&lt;!\[CDATA\[[\w\W]*?]]>/i,tag:{pattern:/&lt;\/?[\w:-]+\s*(?:\s+[\w:-]+(?:=(?:("|')(\\?[\w\W])*?\1|\w+))?\s*)*\/?>/gi,inside:{tag:{pattern:/^&lt;\/?[\w:-]+/i,inside:{punctuation:/^&lt;\/?/,namespace:/^[\w-]+?:/}},"attr-value":{pattern:/=(?:('|")[\w\W]*?(\1)|[^\s>]+)/gi,inside:{punctuation:/=|>|"/g}},punctuation:/\/?>/g,"attr-name":{pattern:/[\w:-]+/g,inside:{namespace:/^[\w-]+?:/}}}},entity:/&amp;#?[\da-z]{1,8};/gi};Prism.hooks.add("wrap",function(e){e.type==="entity"&&(e.attributes.title=e.content.replace(/&amp;/,"&"))});;
+Prism.languages.css={comment:/\/\*[\w\W]*?\*\//g,atrule:{pattern:/@[\w-]+?.*?(;|(?=\s*{))/gi,inside:{punctuation:/[;:]/g}},url:/url\((["']?).*?\1\)/gi,selector:/[^\{\}\s][^\{\};]*(?=\s*\{)/g,property:/(\b|\B)[\w-]+(?=\s*:)/ig,string:/("|')(\\?.)*?\1/g,important:/\B!important\b/gi,ignore:/&(lt|gt|amp);/gi,punctuation:/[\{\};:]/g};Prism.languages.markup&&Prism.languages.insertBefore("markup","tag",{style:{pattern:/(&lt;|<)style[\w\W]*?(>|&gt;)[\w\W]*?(&lt;|<)\/style(>|&gt;)/ig,inside:{tag:{pattern:/(&lt;|<)style[\w\W]*?(>|&gt;)|(&lt;|<)\/style(>|&gt;)/ig,inside:Prism.languages.markup.tag.inside},rest:Prism.languages.css}}});;
+Prism.languages.css.selector={pattern:/[^\{\}\s][^\{\}]*(?=\s*\{)/g,inside:{"pseudo-element":/:(?:after|before|first-letter|first-line|selection)|::[-\w]+/g,"pseudo-class":/:[-\w]+(?:\(.*\))?/g,"class":/\.[-:\.\w]+/g,id:/#[-:\.\w]+/g}};Prism.languages.insertBefore("css","ignore",{hexcode:/#[\da-f]{3,6}/gi,entity:/\\[\da-f]{1,8}/gi,number:/[\d%\.]+/g,"function":/(attr|calc|cross-fade|cycle|element|hsla?|image|lang|linear-gradient|matrix3d|matrix|perspective|radial-gradient|repeating-linear-gradient|repeating-radial-gradient|rgba?|rotatex|rotatey|rotatez|rotate3d|rotate|scalex|scaley|scalez|scale3d|scale|skewx|skewy|skew|steps|translatex|translatey|translatez|translate3d|translate|url|var)/ig});;
+Prism.languages.clike={comment:{pattern:/(^|[^\\])(\/\*[\w\W]*?\*\/|(^|[^:])\/\/.*?(\r?\n|$))/g,lookbehind:!0},string:/("|')(\\?.)*?\1/g,"class-name":{pattern:/((?:(?:class|interface|extends|implements|trait|instanceof|new)\s+)|(?:catch\s+\())[a-z0-9_\.\\]+/ig,lookbehind:!0,inside:{punctuation:/(\.|\\)/}},keyword:/\b(if|else|while|do|for|return|in|instanceof|function|new|try|throw|catch|finally|null|break|continue)\b/g,"boolean":/\b(true|false)\b/g,"function":{pattern:/[a-z0-9_]+\(/ig,inside:{punctuation:/\(/}}, number:/\b-?(0x[\dA-Fa-f]+|\d*\.?\d+([Ee]-?\d+)?)\b/g,operator:/[-+]{1,2}|!|&lt;=?|>=?|={1,3}|(&amp;){1,2}|\|?\||\?|\*|\/|\~|\^|\%/g,ignore:/&(lt|gt|amp);/gi,punctuation:/[{}[\];(),.:]/g};
+;
+Prism.languages.javascript=Prism.languages.extend("clike",{keyword:/\b(var|let|if|else|while|do|for|return|in|instanceof|function|new|with|typeof|try|throw|catch|finally|null|break|continue)\b/g,number:/\b-?(0x[\dA-Fa-f]+|\d*\.?\d+([Ee]-?\d+)?|NaN|-?Infinity)\b/g});Prism.languages.insertBefore("javascript","keyword",{regex:{pattern:/(^|[^/])\/(?!\/)(\[.+?]|\\.|[^/\r\n])+\/[gim]{0,3}(?=\s*($|[\r\n,.;})]))/g,lookbehind:!0}});Prism.languages.markup&&Prism.languages.insertBefore("markup","tag",{script:{pattern:/(&lt;|<)script[\w\W]*?(>|&gt;)[\w\W]*?(&lt;|<)\/script(>|&gt;)/ig,inside:{tag:{pattern:/(&lt;|<)script[\w\W]*?(>|&gt;)|(&lt;|<)\/script(>|&gt;)/ig,inside:Prism.languages.markup.tag.inside},rest:Prism.languages.javascript}}});
+;
+Prism.languages.scss=Prism.languages.extend("css",{comment:{pattern:/(^|[^\\])(\/\*[\w\W]*?\*\/|\/\/.*?(\r?\n|$))/g,lookbehind:!0},atrule:/@[\w-]+(?=\s+(\(|\{|;))/gi,url:/([-a-z]+-)*url(?=\()/gi,selector:/([^@;\{\}\(\)]?([^@;\{\}\(\)]|&amp;|\#\{\$[-_\w]+\})+)(?=\s*\{(\}|\s|[^\}]+(:|\{)[^\}]+))/gm});Prism.languages.insertBefore("scss","atrule",{keyword:/@(if|else if|else|for|each|while|import|extend|debug|warn|mixin|include|function|return)|(?=@for\s+\$[-_\w]+\s)+from/i});Prism.languages.insertBefore("scss","property",{variable:/((\$[-_\w]+)|(#\{\$[-_\w]+\}))/i});Prism.languages.insertBefore("scss","ignore",{placeholder:/%[-_\w]+/i,statement:/\B!(default|optional)\b/gi,"boolean":/\b(true|false)\b/g,"null":/\b(null)\b/g,operator:/\s+([-+]{1,2}|={1,2}|!=|\|?\||\?|\*|\/|\%)\s+/g});
+;
+</script>
+</head>
+<body>
+
+    <div class="navigation">
+        <div class="gutter">
+            <div class="group ">
+                <a href="/test/example/styleguide/">Home</a>
+            </div>
+            
+            <div class="group is-active">
+                <span>base</span>
+                <ul>
+                    
+                    <li><a class="" href="/test/example/styleguide/base/_headings.html">Headings</a></li>
+                    
+                    <li><a class="is-active" href="/test/example/styleguide/base/_typography.html">Typography</a></li>
+                    
+                </ul>
+            </div>
+            
+            <div class="group ">
+                <span>comments</span>
+                <ul>
+                    
+                    <li><a class="" href="/test/example/styleguide/comments/_comments-sass.html">Comment 4a</a></li>
+                    
+                    <li><a class="" href="/test/example/styleguide/comments/_comments-scss.html">Comment 1a</a></li>
+                    
+                </ul>
+            </div>
+            
+            <div class="group ">
+                <span>modules</span>
+                <ul>
+                    
+                    <li><a class="" href="/test/example/styleguide/modules/_navigation.html">Navigation</a></li>
+                    
+                </ul>
+            </div>
+            
+            <div class="group ">
+                <span>objects</span>
+                <ul>
+                    
+                    <li><a class="" href="/test/example/styleguide/objects/_alerts.html">Alerts</a></li>
+                    
+                    <li><a class="" href="/test/example/styleguide/objects/_buttons.html">Buttons</a></li>
+                    
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="gutter">
+        
+            <div class="section">
+                
+                    <div class="comment"><h1 id="typography">Typography</h1>
+<p>Basic typography site-wide.</p>
+</div>
+                
+                
+                    <div class="result">
+                        <iframe id="iframe_mywat" height="0" src="about:blank"></iframe>
+                        <script id="script_mywat">
+                            var iframe  = document.getElementById('iframe_mywat');
+                            var context = iframe.contentWindow.document;
+                            var script  = document.getElementById('script_mywat');
+                            context.open();
+                            context.write('<!doctype html>'
+                                +'<html>'
+                                +'    <head>'
+                                +'        <link rel="stylesheet" href="/test/example/assets/css/screen.css" /><link rel="stylesheet" href="/test/example/assets/css/theme.css" /><link rel="stylesheet" href="/test/example/assets/css/webfonts.css" /><script src="/test/example/assets/js/script.js"><\/script>'
+                                +'    </head>'
+                                +'    <body>'
+                                +'        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac tristique turpis. Fusce lacinia sem quis mi feugiat, a elementum magna tincidunt. Maecenas id suscipit est, id commodo nisi. Aliquam interdum, lacus sed imperdiet laoreet, metus mi rhoncus metus, vitae fringilla nisi arcu et elit.</p>'
+                                +'    </body>'
+                                +'</html>');
+                            context.close();
+                            script.parentNode.removeChild(script);
+                        </script>
+                    </div>
+                
+                
+                    <div class="source language-markup" data-source-type="html"><pre><code>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac tristique turpis. Fusce lacinia sem quis mi feugiat, a elementum magna tincidunt. Maecenas id suscipit est, id commodo nisi. Aliquam interdum, lacus sed imperdiet laoreet, metus mi rhoncus metus, vitae fringilla nisi arcu et elit.&lt;/p&gt;</code></pre>
+</div>
+                
+                
+                    <div class="source language-scss" data-source-type="scss"><pre><code>body {
+    font: 14px/25px Arial;
+}</code></pre></div>
+                
+
+            </div>
+        
+    </div>
+
+    <script>
+        // Resize all iframes to exactly fit content within
+        window.onload = function() {
+            var iframes = document.querySelectorAll('iframe');
+            for ( var i = 0; i < iframes.length; i++ ){
+                iframes[i].height = iframes[i].contentWindow.document.body.scrollHeight;
+            }
+        };
+    </script>
+
+</body>
+</html>

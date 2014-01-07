@@ -23,27 +23,49 @@ module.exports = function(grunt) {
             },
         },
 
+        test: 'xxx',
+
         // Before generating any new files, remove any previously-created files.
         clean: {
-            example: ['test/example/styleguide/', 'test/example/assets/sass/readme.md'],
+            example: ['test/*/styleguide/'],
         },
 
         // Configuration to be run (and then tested).
         sassdown: {
-            options: {
-                assets: [
-                    'test/example/assets/css/*.css',
-                    'test/example/assets/js/*.js'
-                ],
-                //theme: 'test/theme.css',
-                //template: 'test/template.hbs'
+            defaultStyleguide: {
+                options: {
+                    assets: [
+                        'test/example/assets/css/*.css',
+                        'test/example/assets/js/*.js'
+                    ]
+                    //theme: 'test/theme.css',
+                    //template: 'test/template.hbs'
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'test/example/assets/sass/partials',
+                    src: ['**/*.{scss,sass}'],
+                    dest: 'test/example/styleguide/'
+                }]
             },
-            files: {
-                expand: true,
-                cwd: 'test/example/assets/sass/partials',
-                src: ['**/*.{scss,sass}'],
-                dest: 'test/example/styleguide/'
+            customStyleguide: {
+                options: {
+                    assets: [
+                        'test/custom/assets/css/*.css'
+                    ],
+                    excludeMissing: true,
+                    readme: false,
+                    commentStart: /\/\* (?:[=]{4,}\n[ ]+|(?!\n))/,
+                    commentEnd: /[ ]+[=]{4,} \*\//
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'test/custom/assets/sass',
+                    src: ['**/*.sass'],
+                    dest: 'test/custom/styleguide/'
+                }]
             }
+
         },
 
     });

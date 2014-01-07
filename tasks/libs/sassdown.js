@@ -18,8 +18,10 @@ var Handlebars = require('handlebars');
 // Quick utility functions
 // =======================
 function warning   (message) { return grunt.verbose.warn(message); }
-function uncomment (comment) { return comment.replace(/\/\* | \*\/|\/\*|\*\//g, ''); }
-function unindent  (comment) { return comment.replace(/\n \* |\n \*|\n /g, '\n').replace(/\n   /g, '\n    '); }
+function uncomment (comment, opts) {
+    return comment.replace(new RegExp(opts.commentStart.source + '|' + opts.commentEnd.source, 'g'), '').trim();
+}
+function unindent  (comment) { return comment.trim().replace(/^\*/, '').replace(/\n \* |\n \*|\n /g, '\n').replace(/\n   /g, '\n    '); }
 function fromroot  (resolve) { return path.relative(path.dirname(), resolve); }
 function fromdata  (resolve) { return fromroot(path.resolve(module.filename, '..', '..', 'data', resolve)); }
 
@@ -81,10 +83,10 @@ exports.assets = function (config) {
 
 exports.scaffold = function (config) {
     // Create the destination directory
-    grunt.file.mkdir(path.resolve(config.dest));
+    grunt.file.mkdir(path.resolve(config.files[0].orig.dest));
     // Resolve the relative 'root' of the cwd
     // as we will need this later
-    config.root = fromroot(path.resolve(config.cwd, '..'));
+    config.root = fromroot(path.resolve(config.files[0].orig.cwd, '..'));
 };
 
 exports.theme = function (config) {
@@ -113,48 +115,101 @@ exports.groups = function (config) {
             heading: file.heading,
             group: file.group,
             path: file.path,
-            slug: file.slug
+            url: file.url
         });
     });
-    for (var i=0; i<config.groups.length; i++) {
-        // Explain how this dir gets created automatically
-        grunt.verbose.writeln('        '+config.dest+config.groups[i]+'/');
-    }
+    // for (var i=0; i<config.groups.length; i++) {
+    //     // Explain how this dir gets created automatically
+    //     grunt.verbose.writeln('        '+config.dest+config.groups[i]+'/');
+    // }
     return config.groups;
 };
 
-exports.metadata = function (file, page) {
+exports.metadata = function (file, page, opts) {
+    var regexp = new RegExp(
+        opts.commentStart.source +
+        '([\\\s\\\S]*?)' +
+        opts.commentEnd.source,
+        'g'
+    );
+    var sect, sections = [];
     // Assign metadata properties to file object
     file.slug     = path.basename(page._path, path.extname(page._path));
-    file.heading  = (page._name) ? page._name : file.slug;
     file.group    = path.dirname(page._path).split(path.sep)[0];
     file.path     = file.dest.replace(path.extname(page._path), '.html');
+    file.url      = opts.baseUrl ? file.path.replace(file.orig.dest, opts.baseUrl) : '/' + file.path;
     file.original = file.src[0];
     file.site     = {};
-    file.sections = page._src.match(/\/\*([\s\S]*?)\*\//g);
+    file.sections = [];
+    //replace sigle line comments like `/* a comment */` with SASS-like syntax
+    //TODO: needs a better fix
+    page._src = page._src.replace(/\/\*([^\n]*)\*\//g, '//$1');
+    //file.sections = page._src.match(/\/\*([\s\S]*?)\*\//g);
+    while((sect = regexp.exec(page._src)) !== null) {
+        sections.push(sect);
+    }
+    //processing sections =
+    file.sections = sections.map(function (el, index, a) {
+        //captured string sect[0]
+        //first group sect[1]
+        var nextEl = a[index + 1];
+        var nextIndex = nextEl ? nextEl.index : page._src.length;
+        var cssSrc = page._src.slice( el.index + el[0].length, nextIndex ).trim();
+
+        if (typeof el[1] === 'string') {
+            el[1] = el[1].trim();
+        }
+
+        el.cssSrc = cssSrc;
+
+        return el;
+
+    });
+    if (file.sections.length) {
+        //extract first line, remove markdown and normalize
+        page._name =  file.sections[0][1].split('\n').shift().replace(/^[\s#\*]+/, '').trim();
+    }
+
+    file.heading  = (typeof page._name === 'string' && page._name.length) ? page._name : file.slug;
+    //file.sections = sections;//page._src.match(regexp);
     // Get rid of some object literal clutter
-    delete file.orig;
-    delete file.dest;
-    delete file.src;
+    //delete file.orig;
+    //delete file.dest;
+    //delete file.src;
     // Return file back
     return file;
 };
 
 exports.files = function (config) {
     // Modify attributes for each file
-    config.files.forEach(function(file){
+    config.files = config.files.map(function(file){
         // Page references
         var page = {};
-        page._path = path.relative(config.cwd, file.src[0]);
+        var src = '';
+
+        page._path = path.relative(file.orig.cwd, file.src[0]);
         page._src  = grunt.file.read(file.src);
-        page._name = (markdown(unindent(uncomment(page._src))).match('<h1')) ? markdown(unindent(uncomment(page._src))).split('</h1>')[0].split('>')[1] : null;
+
+        src = unindent(uncomment(page._src, config.opts));
+
+        page._name = null;
+        // MOVED TO METADATApage._name = (markdown(src).match('<h1')) ? markdown(src).split('</h1>')[0].split('>')[1] : null;
         // Add properties to file and use node path on
         // page object for consistent file system resolving
-        file = exports.metadata(file, page);
+        file = exports.metadata(file, page, config.opts);
         // Throw any errors
-        if (!file.sections || !file.heading) { exports.errors(file); }
+        if (!file.sections.length || !file.heading) {
+            if (config.opts.excludeMissing) {
+                return null;
+            } else {
+                exports.errors(file);
+            }
+        }
         // Format the content sections
-        if (file.sections) { exports.sections(file); }
+        if (file.sections) { exports.sections(file, config); }
+        return file;
+    }).filter(function (file) {
+        return file !== null;
     });
     // Return back
     return config.files;
@@ -181,65 +236,95 @@ exports.errors = function (file) {
     }
 };
 
-exports.sections = function (file) {
+exports.sections = function (file, config) {
     // Loop through any sections (comments) in file
-    file.sections.forEach(function(section, index){
+    file.sections.forEach(function(sectionObj, index){
         // Remove CSS comment tags and any SASS-style
         // comment block indentation at line beginnings
-        section = unindent(uncomment(section));
+        var rawMarkdown = unindent(sectionObj[1], config.opts).trim();
+
         // See if any ```-marked or 4-space indented code blocks exist
-        if (section.match(/    |```/)) {
+        if (/    |```/.test(rawMarkdown)) {
             // Encapsulate and mark the code block
-            section = section.replace(/```/, '[html]\n```').replace(/     /g,'    ').replace(/    /, '[html]\n    ');
+            if (rawMarkdown.indexOf('```') !== -1) {
+                rawMarkdown = rawMarkdown.replace(/```/, '[html]\n```');
+            } else if (rawMarkdown.indexOf('    ') !== -1) {
+                rawMarkdown = rawMarkdown.replace(/    /, '[html]\n    ');
+            }
             // Return our sections object
             file.sections[index] = {
                 id: Math.random().toString(36).substr(2,5),
-                comment: markdown(section.split('[html]')[0]),
-                source: markdown(section.split('[html]\n')[1]),
-                result: section.split('[html]\n')[1].replace(/     |    |```/g, '').replace(/(\r\n|\n|\r)/gm,'')
+                comment: markdown(rawMarkdown.split('[html]')[0]),
+                source: markdown(rawMarkdown.split('[html]\n')[1]),
+                result: rawMarkdown.split('[html]\n')[1].replace(/     |    |```/g, '').replace(/(\r\n|\n|\r)/gm,'')
             };
         } else {
             // Without code, it is just a comment
             file.sections[index] = {
-                comment: markdown(section)
+                comment: markdown(rawMarkdown)
             };
         }
+        if (sectionObj.cssSrc.length  > 0) {
+            file.ext = file.prismLang = path.extname(file.src[0]).slice(1);
+            if (file.ext === 'sass') {
+                file.prismLang = 'scss';
+            }
+            file.sections[index].prismLang = file.prismLang;
+            file.sections[index].fileExt = file.ext;
+            file.sections[index].cssSource = '<pre><code>' + sectionObj.cssSrc + '</code></pre>';
+        }
     });
+
 };
 
 exports.readme = function (config) {
     // Resolve the relative path to readme
-    var readme = fromroot(path.resolve(config.root, 'readme.md'));
-    // Readme.md not found, create it:
-    if (!grunt.file.exists(readme)) {
-        warning('Readme file not found. Create it.');
-        grunt.file.write(readme, 'Styleguide\n==========\n\nFill me with your delicious readme content\n');
-        grunt.verbose.or.ok('Readme file created: '+config.root+'/readme.md');
+    var readme = config.opts.readme;
+
+    if (typeof readme === 'string') {
+        readme = grunt.config.process(readme);
     }
-    // Now that a Readme.md exists
-    if (grunt.file.exists(readme)) {
-        // Create a file object
-        var file = {};
-        // Fill it with data for an index
-        file.slug     = 'index';
-        file.heading  = 'Home';
-        file.group    = '';
-        file.path     = fromroot(path.resolve(config.dest, 'index.html'));
+    if (readme === true) {
+        // Readme.md not found, create it:
+        readme = fromroot(path.resolve(config.root, 'readme.md'));
+        if (!grunt.file.exists(readme)) {
+            warning('Readme file not found. Create it.');
+            grunt.file.write(readme, 'Styleguide\n==========\n\nFill me with your delicious readme content\n');
+            grunt.verbose.or.ok('Readme file created: '+config.root+'/readme.md');
+        }
+    }
+
+    // Create a file object
+    var file = {};
+    // Fill it with data for an index
+    file.slug     = 'index';
+    file.heading  = 'Home';
+    file.group    = '';
+    file.path     = fromroot(path.resolve(config.files[0].orig.dest, 'index.html'));
+    file.site     = {};
+
+    if (readme && grunt.file.isFile(readme)) {
         file.original = readme;
-        file.site     = {};
         file.sections = [{
             comment: markdown(grunt.file.read(readme))
         }];
         // Output the file
-        exports.output(config, file);
+
+    } else {
+        file.original = null;
+        file.sections = [{
+            comment: '<h1>Styleguide Index</h1>'
+        }];
     }
+    exports.output(config, file);
 };
 
 exports.output = function (config, file) {
     // Site rather than page-specific data
-    file.site.root   = config.dest;
+    file.site.root   = config.files[0].orig.dest;
+    file.site.rootUrl  = path.normalize( config.opts.baseUrl || ('/' + config.files[0].orig.dest));
     file.site.groups = config.groups;
-    file.site.assets = '/'+config.dest+'assets';
+    file.site.assets = '/'+file.site.root+'assets';
     // Write out to path with grunt
     return grunt.file.write(
         file.path,
