@@ -201,20 +201,20 @@ Sassdown uses Handlebars to output data from the [data objects](#data-objects) i
 
 ```html
 {{#each page.sections}}
-    <div class="section">
+    <section class="sassdown-section">
         {{#if comment}}
-            <div class="comment">{{{comment}}}</div>
+            <div class="sassdown-comment">{{{comment}}}</div>
         {{/if}}
         {{#if result}}
-            <div class="result">{{{result}}}</div>
+            <div class="sassdown-result">{{{result}}}</div>
         {{/if}}
         {{#if markup}}
-            <div class="markup">{{{markup}}}</div>
+            <div class="sassdown-markup">{{{markup}}}</div>
         {{/if}}
         {{#if styles}}
-            <div class="styles">{{{styles}}}</div>
+            <div class="sassdown-styles">{{{styles}}}</div>
         {{/if}}
-    </div>
+    </section>
 {{/each}}
 ```
 
@@ -222,11 +222,11 @@ Sassdown uses Handlebars to output data from the [data objects](#data-objects) i
 
 Sassdown also provides a series of Handlebars **partials**, which can be used to output specific information on each page. These are:
 
-* `{{> root}}`<br>Outputs a path to the root directory of the styleguide, relative to whatever page you are on.
+* `{{> root}}`<br/>Outputs a path to the root directory of the styleguide, relative to whatever page you are on.
  
-* `{{> assets}}`<br>Outputs a set of `<link />` or `<script>` tags that include assets specified in the Grunt task options.
+* `{{> assets}}`<br/>Outputs a set of `<link />` or `<script>` tags that include assets specified in the Grunt task options.
  
-* `{{> theme}}`<br>Outputs the theme stylesheet, minified, into a `<style>` tag.
+* `{{> theme}}`<br/>Outputs the theme stylesheet, minified, into a `<style>` tag.
 
 # Highlight.js
 
