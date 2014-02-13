@@ -42,7 +42,9 @@
                 {{/each}}
                 </ul>
             {{else}}
-                <a href="{{> root}}/{{href}}">{{title}}</a>
+                {{#if href}}
+                    <a href="{{> root}}/{{href}}">{{title}}</a>
+                {{/if}}
             {{/if}}
         {{/each}}
     </div>
