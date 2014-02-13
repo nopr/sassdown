@@ -92,7 +92,8 @@ ul, ol { margin-left: 1em; list-style: outside; }
   border-radius: 4px;
 }
 .sassdown-nav a:hover,
-.sassdown-nav a:focus {
+.sassdown-nav a:focus,
+.sassdown-nav a.is-active {
   background: #d0d5c5;
 }
 
