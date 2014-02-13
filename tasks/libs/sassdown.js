@@ -40,6 +40,14 @@ function normalize (comment) {
     }
     return comment;
 }
+function hashString(string) {
+    var result = 0,
+        length = string.length;
+    for (var i = 0; i < length; i++) {
+        result = result * 31 + string.charCodeAt(i);
+    }
+    return result;
+}
 
 // Exported Sassdown methods
 // =========================
@@ -202,7 +210,7 @@ module.exports.getSections = function (file) {
 module.exports.formatting = function (content, styles) {
     // Create output object with unique id
     var output = {
-        id: Math.random().toString(36).substr(2,5)
+        id: hashString(content).toString(36).substr(2,5)
     };
     //hljs.configure({useBR: true});
     // If we find code blocks
