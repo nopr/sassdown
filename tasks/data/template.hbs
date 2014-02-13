@@ -5,91 +5,88 @@
     <title>{{page.title}}</title>
 </head>
 <body>
-<div class="gutter">
+    <main class="sassdown-main">
+        <nav class="sassdown-nav">
+            <h1 class="sassdown-title"><a href="{{> root}}/{{href}}">Styleguide</a></h1>
+            {{#each pages}}
+                {{#if isDirectory}}
+                    <h2 class="sassdown-heading">{{name}}</h2>
+                    <ul class="sassdown-group">
+                    {{#each pages}}
+                        <li>
+                            {{#if isDirectory}}
+                                <h3 class="sassdown-heading">{{name}}</h3>
+                                <ul class="sassdown-group">
+                                {{#each pages}}
+                                    <li>
+                                        {{#if isDirectory}}
+                                            <h4 class="sassdown-heading">{{name}}</h4>
+                                            <ul class="sassdown-group">
+                                            {{#each pages}}
+                                                <li>
+                                                    <a href="{{> root}}/{{href}}">{{title}}</a>
+                                                </li>
+                                            {{/each}}
+                                            </ul>
+                                        {{else}}
+                                            <a href="{{> root}}/{{href}}">{{title}}</a>
+                                        {{/if}}
+                                    </li>
+                                {{/each}}
+                                </ul>
+                            {{else}}
+                                <a href="{{> root}}/{{href}}">{{title}}</a>
+                            {{/if}}
+                        </li>
+                    {{/each}}
+                    </ul>
+                {{else}}
+                    <a href="{{> root}}/{{href}}">{{title}}</a>
+                {{/if}}
+            {{/each}}
+        </nav>
 
-    <div id="nav">
-        <h1><a href="{{> root}}/{{href}}">Styleguide</a></h1>
-        {{#each pages}}
-            {{#if isDirectory}}
-                <h2 class="heading">{{name}}</h2>
-                <ul class="group">
-                {{#each pages}}
-                    <li>
-                        {{#if isDirectory}}
-                            <h3 class="heading">{{name}}</h3>
-                            <ul class="group">
-                            {{#each pages}}
-                                <li>
-                                    {{#if isDirectory}}
-                                        <h4 class="heading">{{name}}</h4>
-                                        <ul class="group">
-                                        {{#each pages}}
-                                            <li>
-                                                <a href="{{> root}}/{{href}}">{{title}}</a>
-                                            </li>
-                                        {{/each}}
-                                        </ul>
-                                    {{else}}
-                                        <a href="{{> root}}/{{href}}">{{title}}</a>
-                                    {{/if}}
-                                </li>
-                            {{/each}}
-                            </ul>
-                        {{else}}
-                            <a href="{{> root}}/{{href}}">{{title}}</a>
-                        {{/if}}
-                    </li>
-                {{/each}}
-                </ul>
-            {{else}}
-                <a href="{{> root}}/{{href}}">{{title}}</a>
-            {{/if}}
-        {{/each}}
-    </div>
-
-    <div id="content">
-        {{#each page.sections}}
-            <div class="section">
-                {{#if comment}}
-                    <div class="comment">{{{comment}}}</div>
-                {{/if}}
-                {{#if result}}
-                    <div class="result">
-                        <iframe id="iframe{{@index}}" height="0" src="about:blank"></iframe>
-                        <script id="result{{@index}}" type="text/html">{{{result}}}</script>
-                        <script id="script{{@index}}">
-                            var iframe  = document.getElementById('iframe{{@index}}');
-                            var script  = document.getElementById('script{{@index}}');
-                            var result  = document.getElementById('result{{@index}}');
-                            var context = iframe.contentWindow.document;
-                                context.open();
-                                context.write('<!DOCTYPE html>');
-                                context.write('<'+'html>');
-                                context.write('    <'+'head>');
-                                context.write('        {{> assets}}');
-                                context.write('    <'+'/'+'head>');
-                                context.write('    <'+'body>');
-                                context.write(result.innerHTML);
-                                context.write('    <'+'/'+'body>');
-                                context.write('<'+'/'+'html>');
-                                context.close();
-                            iframe.removeAttribute('id')
-                            result.parentNode.removeChild(result);
-                            script.parentNode.removeChild(script);
-                        </script>
-                    </div>
-                {{/if}}
-                {{#if markup}}
-                    <div class="markup">{{{markup}}}</div>
-                {{/if}}
-                {{#if styles}}
-                    <div class="styles">{{{styles}}}</div>
-                {{/if}}
-            </div>
-        {{/each}}
-    </div>
-
-</div>
+        <section class="sassdown-content">
+            {{#each page.sections}}
+                <section class="sassdown-section">
+                    {{#if comment}}
+                        <div class="sassdown-comment">{{{comment}}}</div>
+                    {{/if}}
+                    {{#if result}}
+                        <div class="sassdown-result">
+                            <iframe id="sassdown-iframe{{@index}}" height="0" src="about:blank"></iframe>
+                            <script id="sassdown-result{{@index}}" type="text/html">{{{result}}}</script>
+                            <script id="sassdown-script{{@index}}">
+                                var iframe  = document.getElementById('sassdown-iframe{{@index}}');
+                                var script  = document.getElementById('sassdown-script{{@index}}');
+                                var result  = document.getElementById('sassdown-result{{@index}}');
+                                var context = iframe.contentWindow.document;
+                                    context.open();
+                                    context.write('<!DOCTYPE html>');
+                                    context.write('<'+'html>');
+                                    context.write('    <'+'head>');
+                                    context.write('        {{> assets}}');
+                                    context.write('    <'+'/'+'head>');
+                                    context.write('    <'+'body>');
+                                    context.write(result.innerHTML);
+                                    context.write('    <'+'/'+'body>');
+                                    context.write('<'+'/'+'html>');
+                                    context.close();
+                                result.parentNode.removeChild(result);
+                                script.parentNode.removeChild(script);
+                            </script>
+                        </div>
+                    {{/if}}
+                    {{#if markup}}
+                        <div class="sassdown-markup">{{{markup}}}</div>
+                    {{/if}}
+                    {{#if styles}}
+                        <div class="sassdown-styles">{{{styles}}}</div>
+                    {{/if}}
+                </section>
+            {{/each}}
+        </section>
+    </main>
 
     <script>
         window.onload = function() {
@@ -98,7 +95,7 @@
                 iframes[i].height = iframes[i].contentWindow.document.body.scrollHeight;
             }
         };
-        var headings = document.querySelectorAll('#nav .heading');
+        var headings = document.querySelectorAll('.sassdown-heading');
         for ( var i = 0; i < headings.length; i++ ){
             headings[i].addEventListener('click', function () {
                 this.classList.toggle('is-open');
