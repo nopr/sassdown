@@ -26,8 +26,8 @@
     var iframes = document.getElementsByTagName('iframe');
     
     for ( var i = 0; i < iframes.length; i++ ){
-        iframes[i].contentDocument.addEventListener('DOMContentLoaded', function () {
-            this.height = this.contentDocument.body.scrollHeight;
+        iframes[i].contentWindow.addEventListener('load', function () {
+            this.height = this.contentWindow.document.body.scrollHeight;
         }.bind(iframes[i]), false);
     }
 
